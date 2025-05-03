@@ -39,16 +39,16 @@ class TodoList extends Model
             $isExist = static::where('list_name', $list_name)->exists();
 
             if ($isExist) {
-                return 1;
+                return response()->json(['result'=>0]);
             } else {
-                static::create([
+                $data = static::create([
                     'list_name' => $list_name,
                     'list_last_update' => now(),
                 ]);
-                return 0;
+                return response()->json(['result'=>1,'list_id'=>$data->list_id]);
             }
         } catch (\Exception $e) {
-            return 2;
+            return response()->json(['result'=>2]);
         }
     }
 }
